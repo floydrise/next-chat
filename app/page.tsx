@@ -13,8 +13,12 @@ export default async function Home() {
       <div className={"max-w-3xl mx-auto md:py-10 h-screen"}>
         <div className={"h-full border rounded-md flex flex-col"}>
           <ChatHeader user={data.user} />
-          <ChatMessages />
-          <ChatInput />
+          {data.user ? (
+            <>
+              <ChatMessages />
+              <ChatInput />
+            </>
+          ) : <h1 className={"font-bold mx-auto my-auto text-xl"}>You need to be logged in to see the chat</h1>}
         </div>
       </div>
       <InitUser user={data?.user} />
