@@ -1,6 +1,7 @@
 "use client";
 import {Message} from "@/components/Message";
 import {useMessage} from "@/lib/store/messages";
+import {DeleteAlert} from "@/components/MessageActions";
 
 export const MessagesList = () => {
   const messages = useMessage((state) => state.messages);
@@ -13,6 +14,7 @@ export const MessagesList = () => {
           <Message key={value.id} value={value}/>
         ))}
       </div>
+      <DeleteAlert/>
     </div>
   );
 };

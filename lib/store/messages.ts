@@ -17,10 +17,14 @@ export interface IMessage {
 interface MessageState {
   messages: IMessage[];
   addMessage: (message: IMessage) => void;
+  actionMessage: IMessage | undefined;
+  setActionMessage: (message: IMessage | undefined) => void
 }
 
 export const useMessage = create<MessageState>()((set) => ({
   messages: [],
+  actionMessage: undefined,
   addMessage: (message) =>
     set((prevState) => ({ messages: [...prevState.messages, message] })),
+  setActionMessage: (message) => set(() => ({ actionMessage: message })),
 }));
