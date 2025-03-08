@@ -1,5 +1,5 @@
-import { IMessage } from "@/components/MessagesList";
 import Image from "next/image";
+import { IMessage } from "@/lib/store/messages";
 
 export const Message = ({ value }: { value: IMessage }) => {
   return (
@@ -7,7 +7,7 @@ export const Message = ({ value }: { value: IMessage }) => {
       <div>
         <Image
           className={"rounded-full"}
-          src={value.users.avatar_url}
+          src={value?.users?.avatar_url || ""}
           alt={"User avatar"}
           width={40}
           height={40}
@@ -15,7 +15,7 @@ export const Message = ({ value }: { value: IMessage }) => {
       </div>
       <div className={"flex-1"}>
         <div className={"flex gap-1 mb-1 items-center"}>
-          <h1 className={"font-bold"}>{value.users.display_name}</h1>
+          <h1 className={"font-bold"}>{value.users?.display_name}</h1>
           <p className={"text-sm text-gray-400"}>
             {new Date(value.created_at).toDateString()}
           </p>
