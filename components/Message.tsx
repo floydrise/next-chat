@@ -32,6 +32,7 @@ export const Message = ({ value }: { value: IMessage }) => {
             <p className={"text-sm text-gray-400"}>
               {new Date(value.created_at).toDateString()}
             </p>
+              {value.is_edit ? <p className={"text-sm text-gray-600 dark:text-gray-300 font-semibold"}>edited</p> : null}
           </div>
           {user?.id === value.users?.id ? (
             <MessageMenu message={value} />
@@ -54,7 +55,10 @@ const MessageMenu = ({ message }: { message: IMessage }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {
+            document.getElementById("trigger-edit")?.click();
+            setActionMessage(message);
+        }}>Edit</DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             document.getElementById("trigger-delete")?.click();
