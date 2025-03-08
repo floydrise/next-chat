@@ -6,7 +6,7 @@ import { InitMessages } from "@/lib/store/InitMessages";
 export const ChatMessages = async () => {
   const supabase = await createClient();
   const { data } = await supabase.from("messages").select("*, users(*)");
-  console.log(data);
+
   return (
     <Suspense fallback={"Loading ..."}>
       <MessagesList />
