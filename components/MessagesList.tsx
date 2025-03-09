@@ -7,7 +7,13 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 
 export const MessagesList = () => {
-  const { messages, addMessage, optimisticIds, optimisticDeleteMessage } = useMessage((state) => state);
+  const {
+    messages,
+    addMessage,
+    optimisticIds,
+    optimisticDeleteMessage,
+    optimisticUpdateMessage,
+  } = useMessage((state) => state);
   const supabase = createClient();
   const scrollRef = useRef({}) as React.RefObject<HTMLDivElement>;
   useEffect(() => {
@@ -39,7 +45,6 @@ export const MessagesList = () => {
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "messages" },
         (payload) => {
-          console.log("Change received!", payload);
           optimisticDeleteMessage(payload.old.id);
         },
       )
@@ -48,6 +53,7 @@ export const MessagesList = () => {
         { event: "UPDATE", schema: "public", table: "messages" },
         (payload) => {
           console.log("Change received!", payload);
+          optimisticUpdateMessage(payload.new as IMessage);
         },
       )
       .subscribe();
