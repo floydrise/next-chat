@@ -1,7 +1,7 @@
 "use client";
 
 import {Input} from "@/components/ui/input";
-import {createClient} from "@/lib/supabase/client";
+import {createClient} from "@/supabase/client";
 import {toast} from "sonner";
 import {v4 as uuidv4} from "uuid";
 import {useUser} from "@/lib/store/user";

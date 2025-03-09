@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {IMessage, useMessage} from "@/lib/store/messages";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {

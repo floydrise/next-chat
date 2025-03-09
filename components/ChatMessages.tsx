@@ -1,6 +1,6 @@
 import { MessagesList } from "@/components/MessagesList";
 import { Suspense } from "react";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/supabase/server";
 import { InitMessages } from "@/lib/store/InitMessages";
 
 export const ChatMessages = async () => {

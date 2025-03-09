@@ -3,7 +3,7 @@ import { Message } from "@/components/Message";
 import { IMessage, useMessage } from "@/lib/store/messages";
 import { DeleteAlert, EditAlert } from "@/components/MessageActions";
 import { useEffect, useRef } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/supabase/client";
 import { toast } from "sonner";
 
 export const MessagesList = () => {

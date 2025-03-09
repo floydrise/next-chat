@@ -1,5 +1,5 @@
 import { ChatHeader } from "@/components/ChatHeader";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/supabase/server";
 import { ChatInput } from "@/components/ChatInput";
 import { ChatMessages } from "@/components/ChatMessages";
 import { InitUser } from "@/lib/store/InitUser";
