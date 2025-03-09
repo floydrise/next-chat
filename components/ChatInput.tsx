@@ -10,7 +10,7 @@ import {IMessage, useMessage} from "@/lib/store/messages";
 export const ChatInput = () => {
     const user = useUser((state) => state.user);
     const addMessage = useMessage((state) => state.addMessage)
-
+    const setOptimisticIds = useMessage((state) => state.setOptimisticIds);
     const supabase = createClient();
     const handleSendMessage = async (text: string) => {
         if (text.trim()) {
@@ -29,6 +29,7 @@ export const ChatInput = () => {
             }
 
             addMessage(newMessage as IMessage);
+            setOptimisticIds(newMessage.id);
 
             const {error} = await supabase.from("messages").insert({text});
             if (error) {

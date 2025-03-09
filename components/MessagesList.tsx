@@ -2,13 +2,14 @@
 import { Message } from "@/components/Message";
 import { IMessage, useMessage } from "@/lib/store/messages";
 import { DeleteAlert, EditAlert } from "@/components/MessageActions";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 
 export const MessagesList = () => {
-  const { messages, addMessage, optimisticIds } = useMessage((state) => state);
+  const { messages, addMessage, optimisticIds, optimisticDeleteMessage } = useMessage((state) => state);
   const supabase = createClient();
+  const scrollRef = useRef({}) as React.RefObject<HTMLDivElement>;
   useEffect(() => {
     const channel = supabase
       .channel("next-chat")
@@ -34,15 +35,41 @@ export const MessagesList = () => {
           }
         },
       )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "messages" },
+        (payload) => {
+          console.log("Change received!", payload);
+          optimisticDeleteMessage(payload.old.id);
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "messages" },
+        (payload) => {
+          console.log("Change received!", payload);
+        },
+      )
       .subscribe();
 
     return () => {
       channel.unsubscribe();
     };
+  }, [addMessage, messages, optimisticIds, supabase]);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+
+    if (scrollContainer) {
+      scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    }
   }, [messages]);
 
   return (
-    <div className={"flex-1 flex flex-col h-full p-5 overflow-y-auto"}>
+    <div
+      className={"flex-1 flex flex-col h-full p-5 overflow-y-auto"}
+      ref={scrollRef}
+    >
       <div className={"flex-1"}></div>
       <div className={"space-y-7"}>
         {messages.map((value, index) => (
