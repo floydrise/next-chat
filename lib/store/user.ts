@@ -5,6 +5,7 @@ interface UserState {
   user: User | null;
 }
 
+// eslint-disable-next-line
 export const useUser = create<UserState>()((set) => ({
   user: null,
 }))

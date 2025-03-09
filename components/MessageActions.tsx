@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {IMessage, useMessage} from "@/lib/store/messages";
+import { IMessage, useMessage } from "@/lib/store/messages";
 import { createClient } from "@/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import React, { useRef } from "react";
 
 export function DeleteAlert() {
@@ -35,11 +34,11 @@ export function DeleteAlert() {
   );
   const handleDeleteMessage = async () => {
     const supabase = createClient();
-    optimisticDeleteMessage(actionMessage?.id!);
+    optimisticDeleteMessage(actionMessage?.id);
     const { error } = await supabase
       .from("messages")
       .delete()
-      .eq("id", actionMessage?.id!);
+      .eq("id", actionMessage?.id ?? "");
     if (error) {
       toast.error(error.message);
     } else {
@@ -73,7 +72,9 @@ export function DeleteAlert() {
 
 export function EditAlert() {
   const actionMessage = useMessage((state) => state.actionMessage);
-  const optimisticUpdateMessage = useMessage((state) => state.optimisticUpdateMessage);
+  const optimisticUpdateMessage = useMessage(
+    (state) => state.optimisticUpdateMessage,
+  );
   const inputRef = useRef({}) as React.RefObject<HTMLInputElement>;
 
   const handleEdit = async () => {
@@ -83,13 +84,13 @@ export function EditAlert() {
       optimisticUpdateMessage({
         ...actionMessage,
         text,
-        is_edit: true
-      } as IMessage)
+        is_edit: true,
+      } as IMessage);
 
       const { error } = await supabase
         .from("messages")
         .update({ text, is_edit: true })
-        .eq("id", actionMessage?.id!);
+        .eq("id", actionMessage?.id ?? "");
       if (error) {
         toast.error(error.message);
       } else {
@@ -111,7 +112,7 @@ export function EditAlert() {
         <DialogHeader>
           <DialogTitle>Edit Message</DialogTitle>
           <DialogDescription>
-            Make changes to your message here. Click save when you're done.
+            Make changes to your message here. Click save when you&#39;re done.
           </DialogDescription>
         </DialogHeader>
 

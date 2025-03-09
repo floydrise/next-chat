@@ -19,7 +19,7 @@ interface MessageState {
   addMessage: (message: IMessage) => void;
   actionMessage: IMessage | undefined;
   setActionMessage: (message: IMessage | undefined) => void;
-  optimisticDeleteMessage: (messageId: string) => void;
+  optimisticDeleteMessage: (messageId: string | undefined) => void;
   optimisticUpdateMessage: (message: IMessage) => void;
   optimisticIds: string[];
   setOptimisticIds: (id: string) => void;
